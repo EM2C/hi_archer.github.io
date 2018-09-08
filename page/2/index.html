@@ -1265,7 +1265,7 @@
 <p><strong>题解：</strong>考试的时候因为本人实在是太菜了。对这个题目完全没有一点思路，考完试以后听了dls直播算是对这个题目有了一点思路代码很短，但是从学习各种姿势到写完用了一天，感觉一下子掌握了好多神奇的姿势，开心。</p>
 <p><strong>经典定理：</strong> $$\large gcd(x^{a}-1,x^{b}-1)=x^{gcd(a,b)}-1$$</p>
 <p>$$\large gcd(fib[a],fib[b])=fib[gcd(a,b)]$$<br>那么对于这个书架的美丽值可以做如下变形：</p>
-<p>\begin{align<em>} \large gcd(b_{1},b_{2},…,b_{k})<br>&amp;\Large= gcd(2^{fib[x_{1}]},2^{fib[x_{2}]},…,2^{fib[x_{k}]})\\<br> &amp;\Large= 2^{gcd(fib[x_{1}]},2^{fib[x_{2}]},…,2^{fib[x_{k}])}\\<br> &amp;\Large=2^{fib[gcd(x_{1},x_{2},……,x_{1k})]}<br>\end{align</em>}</p>
+<p>\begin{align<em>} \large gcd(b_{1},b_{2},…,b_{k})<br>&amp; \Large= gcd(2^{fib[x_{1}]},2^{fib[x_{2}]},…,2^{fib[x_{k}]})\\<br> &amp; \Large= 2^{gcd(fib[x_{1}]},2^{fib[x_{2}]},…,2^{fib[x_{k}])}\\<br> &amp; \Large=2^{fib[gcd(x_{1},x_{2},……,x_{1k})]}<br>\end{align</em>}</p>
 <p>于是我们设$$\large g=gcd(x_{1},x_{2},……,x_{k})$$<br>那么整个书架的美丽值变为$$\large 2^{fib[g]}……①$$<br>又因为</p>
 <p>\begin{align<em>}\large N&amp;=x_{1}+x_{2}……+x_{k}\\<br>\large&amp;=g</em>a_{1}+g<em>a_{2}……+g</em>a_{k}\\<br>\large&amp;=g<em>(a_{1}+a_{2}……+a_{k})……②\\<br>\end{align</em>}</p>
 <p>显然g为N的约数而根据①式可得书架美丽值得期望仅与g有关<br>于是我们枚举N的每一个约数g并统计约数为g的方案数，可以由简单的期望公式就算出答案。<br>对于g的方案数我们可以对上述②继续变形</p>
