@@ -1,48 +1,327 @@
-extends partial/layout
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>【AHOI2008】 聚会 倍增 | hi_archer&#39;blog</title>
 
-block site_title
-    != page.title + " · " + config.title
+  <!-- keywords -->
+  
 
-block description
-    - var desc = page.desc || page.title + ' - ' + config.author;
-    meta(name="description", content=desc)
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="BZOJDescriptionY岛风景美丽宜人，气候温和，物产丰富。Y岛上有N个城市，有N-1条城市间的道路连接着它们。每一条道路都连接某两个城市。幸运的是，小可可通过这些道路可以走遍Y岛的所有城市。神奇的是，乘车经过每条道路所需要的费用都是一样的。小可可，小卡卡和小YY经常想聚会，每次聚会，他们都会选择一个城市，使得3个人到达这个城市的总费用最小。 由于他们计划中还会有很多次聚会，每次都选择一个">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【AHOI2008】 聚会 倍增">
+<meta property="og:url" content="http://yoursite.com/2018/09/02/【AHOI2008】-聚会-倍增/index.html">
+<meta property="og:site_name" content="hi_archer&#39;blog">
+<meta property="og:description" content="BZOJDescriptionY岛风景美丽宜人，气候温和，物产丰富。Y岛上有N个城市，有N-1条城市间的道路连接着它们。每一条道路都连接某两个城市。幸运的是，小可可通过这些道路可以走遍Y岛的所有城市。神奇的是，乘车经过每条道路所需要的费用都是一样的。小可可，小卡卡和小YY经常想聚会，每次聚会，他们都会选择一个城市，使得3个人到达这个城市的总费用最小。 由于他们计划中还会有很多次聚会，每次都选择一个">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-02T15:11:38.708Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【AHOI2008】 聚会 倍增">
+<meta name="twitter:description" content="BZOJDescriptionY岛风景美丽宜人，气候温和，物产丰富。Y岛上有N个城市，有N-1条城市间的道路连接着它们。每一条道路都连接某两个城市。幸运的是，小可可通过这些道路可以走遍Y岛的所有城市。神奇的是，乘车经过每条道路所需要的费用都是一样的。小可可，小卡卡和小YY经常想聚会，每次聚会，他们都会选择一个城市，使得3个人到达这个城市的总费用最小。 由于他们计划中还会有很多次聚会，每次都选择一个">
+  
+    <link rel="alternative" href="/atom.xml" title="hi_archer&#39;blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
 
-block container
-    div#post-container
-        include mixins/post
-        +post(page)
-        include partial/comment
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-    //- Comment
-    if theme.duoshuo
-        script.
-            var duoshuoQuery = {short_name:"#{theme.duoshuo}"};
-            (function() {
-                var ds = document.createElement('script');
-                ds.type = 'text/javascript';ds.async = true;
-                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-                ds.charset = 'UTF-8';
-                (document.getElementsByTagName('head')[0] 
-                || document.getElementsByTagName('body')[0]).appendChild(ds);
-            })();
+  
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">hi_archer</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">hi_archer</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">hi_archer</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-【AHOI2008】-聚会-倍增" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/02/【AHOI2008】-聚会-倍增/" class="article-date">
+  	<time datetime="2018-09-02T15:08:35.000Z" itemprop="datePublished">2018-09-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【AHOI2008】 聚会 倍增
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/倍增/">倍增</a>
+	</div>
 
 
-    if theme.disqus
-        script.
-            var disqus_shortname = '#{theme.disqus}';
-            var disqus_identifier = '#{page.path}';
-            var disqus_title = '#{page.title}';
-            var disqus_url = '#{config.url}/#{page.path}';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        script(id='dsq-count-scr' src='//#{theme.disqus}.disqus.com/count.js' async)
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=1832" target="_blank" rel="noopener">BZOJ</a><br><strong>Description</strong><br>Y岛风景美丽宜人，气候温和，物产丰富。Y岛上有N个城市，有N-1条城市间的道路连接着它们。每一条道路都连接某两个城市。幸运的是，小可可通过这些道路可以走遍Y岛的所有城市。神奇的是，乘车经过每条道路所需要的费用都是一样的。小可可，小卡卡和小YY经常想聚会，每次聚会，他们都会选择一个城市，使得3个人到达这个城市的总费用最小。 由于他们计划中还会有很多次聚会，每次都选择一个地点是很烦人的事情，所以他们决定把这件事情交给你来完成。他们会提供给你地图以及若干次聚会前他们所处的位置，希望你为他们的每一次聚会选择一个合适的地点。<br><strong>Input</strong></p>
+<p>第一行两个正整数，N和M。分别表示城市个数和聚会次数。后面有N-1行，每行用两个正整数A和B表示编号为A和编号为B的城市之间有一条路。城市的编号是从1到N的。再后面有M行，每行用三个正整数表示一次聚会的情况：小可可所在的城市编号，小卡卡所在的城市编号以及小YY所在的城市编号。<br><strong>Output</strong></p>
+<p>一共有M行，每行两个数Pos和Cost，用一个空格隔开。表示第i次聚会的地点选择在编号为Pos的城市，总共的费用是经过Cost条道路所花费的费用。</p>
+<p><strong>Sample Input</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">6 4</span><br><span class="line"></span><br><span class="line">1 2</span><br><span class="line"></span><br><span class="line">2 3</span><br><span class="line"></span><br><span class="line">2 4</span><br><span class="line"></span><br><span class="line">4 5</span><br><span class="line"></span><br><span class="line">5 6</span><br><span class="line"></span><br><span class="line">4 5 6</span><br><span class="line"></span><br><span class="line">6 3 1</span><br><span class="line"></span><br><span class="line">2 4 4</span><br><span class="line"></span><br><span class="line">6 6 6</span><br></pre></td></tr></table></figure></p>
+<p><strong>Sample Output</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">5 2</span><br><span class="line"></span><br><span class="line">2 5</span><br><span class="line"></span><br><span class="line">4 1</span><br><span class="line"></span><br><span class="line">6 0</span><br></pre></td></tr></table></figure></p>
+<p><strong>数据范围：</strong></p>
+<p>100%的数据中，N&lt;=500000，M&lt;=500000。</p>
+<p>40%的数据中N&lt;=2000，M&lt;=2000。</p>
+<p><strong>题解：</strong><br>没什么特别好的思路，感觉我就是暴力。。。<br>嗯，就是把三个点两两的LCA = t找出来，然后找出t与第三个点的LCA,然后计算长度，嗯，三个长度都算出来了，之后比较三个长度的长短，输出最短的。就算用的倍增找LCA，而且思路感觉有点偷懒，最后还是成功AC，且在BZOJ排在100名，还可以。<br><strong>代码：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int MAXN = 500005;</span><br><span class="line"></span><br><span class="line">int N,M,MAXD,e = 1;</span><br><span class="line">int head[MAXN],deep[MAXN],anc[MAXN][25];</span><br><span class="line"></span><br><span class="line">inline int abs(int x)&#123; return x &gt; 0 ? x : -x; &#125;</span><br><span class="line"></span><br><span class="line">struct node&#123;</span><br><span class="line">	int v,next;</span><br><span class="line">&#125;edge[MAXN*2];</span><br><span class="line"></span><br><span class="line">inline void addedge(int u,int v)&#123;</span><br><span class="line">	edge[e] = (node)&#123;v,head[u]&#125;;head[u] = e++;</span><br><span class="line">	edge[e] = (node)&#123;u,head[v]&#125;;head[v] = e++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline int read()&#123;</span><br><span class="line">	int x = 0;char ch = getchar();</span><br><span class="line">	while(ch &lt; &apos;0&apos; || &apos;9&apos; &lt; ch) &#123;ch = getchar();&#125;</span><br><span class="line">	while(&apos;0&apos; &lt;= ch&amp;&amp; ch &lt;=&apos;9&apos;) &#123;x = x * 10 +ch-&apos;0&apos;;ch = getchar();&#125;</span><br><span class="line">	return x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline void init()&#123;</span><br><span class="line">	N = read();M = read();</span><br><span class="line">	</span><br><span class="line">	for(int i = 1;i &lt; N;i &lt;&lt;= 1,MAXD++);</span><br><span class="line">	</span><br><span class="line">	int u,v;</span><br><span class="line">	</span><br><span class="line">	for(int i = 1;i &lt; N;i++)&#123;</span><br><span class="line">		u = read();v = read();</span><br><span class="line">		addedge(u,v);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(int u,int h)&#123;</span><br><span class="line">	deep[u] = h;</span><br><span class="line">	</span><br><span class="line">	for(int i = 1;i &lt;= MAXD;i++) anc[u][i] = anc[ anc[u][i-1] ][i-1];</span><br><span class="line">	</span><br><span class="line">	for(int i = head[u];i;i = edge[i].next)&#123;</span><br><span class="line">		int v = edge[i].v;</span><br><span class="line">		if(!deep[v])&#123;</span><br><span class="line">			anc[v][0] = u;</span><br><span class="line">			dfs(v,h+1);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline void swim(int &amp;u,int h)&#123;</span><br><span class="line">	for(int i = 0;h;i++)&#123;</span><br><span class="line">		if(h&amp;1) u = anc[u][i];</span><br><span class="line">		h &gt;&gt;= 1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline int query(int u,int v)&#123;</span><br><span class="line">	if(deep[u] &lt; deep[v]) swap(u,v);</span><br><span class="line">	</span><br><span class="line">	swim(u,deep[u] - deep[v]);</span><br><span class="line">	</span><br><span class="line">	if(u == v) return u;</span><br><span class="line">	</span><br><span class="line">	for(int i = MAXD;i &gt;= 0;i--)</span><br><span class="line">	   if(anc[u][i] != anc[v][i])&#123;</span><br><span class="line">		u = anc[u][i];</span><br><span class="line">		v = anc[v][i];</span><br><span class="line">	&#125;</span><br><span class="line">	if(u != v) return anc[u][0];</span><br><span class="line">	return u;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	init();</span><br><span class="line">	dfs(1,1);</span><br><span class="line">	int a,b,c,lca_a_b,lca_b_c,lca_a_c,lca_1,lca_2,lca_3,dist1,dist2,dist3;</span><br><span class="line">	for(int i = 1;i &lt;= M;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		</span><br><span class="line">		a = read();b = read();c = read();</span><br><span class="line">		</span><br><span class="line">		lca_a_b = query(a,b);lca_b_c = query(b,c);lca_a_c = query(a,c);</span><br><span class="line">		</span><br><span class="line">		lca_1 = query(lca_a_b,c);lca_2 = query(lca_b_c,a);lca_3 = query(lca_a_c,b);</span><br><span class="line">		</span><br><span class="line">		dist1 = abs(deep[lca_a_b] - deep[a]) + abs(deep[lca_a_b] - deep[b]) + abs(deep[lca_1] - deep[c]) + abs(deep[lca_1] - deep[lca_a_b]);</span><br><span class="line">		dist2 = abs(deep[lca_b_c] - deep[b]) + abs(deep[lca_b_c] - deep[c]) + abs(deep[lca_2] - deep[a]) + abs(deep[lca_1] - deep[lca_b_c]);</span><br><span class="line">		dist3 = abs(deep[lca_a_c] - deep[a]) + abs(deep[lca_a_c] - deep[c]) + abs(deep[lca_3] - deep[b]) + abs(deep[lca_1] - deep[lca_a_c]);</span><br><span class="line">		</span><br><span class="line">		if(dist1 &gt; dist2)&#123;</span><br><span class="line">			if(dist2 &gt; dist3) printf(&quot;%d %d\n&quot;,lca_a_c,dist3);</span><br><span class="line">			else printf(&quot;%d %d\n&quot;,lca_b_c,dist2);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		else &#123;</span><br><span class="line">			if(dist1 &gt; dist3) printf(&quot;%d %d\n&quot;,lca_a_c,dist3);</span><br><span class="line">			else printf(&quot;%d %d\n&quot;,lca_a_b,dist1);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
-block pagination
-    include mixins/paginator
-    +post()
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/02/【HNOI-2010】Bounce-弹飞绵羊-分块/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          【HNOI 2010】Bounce 弹飞绵羊 分块
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/02/【SCOI-2005】王室联邦-树上分块/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【SCOI 2005】王室联邦 树上分块</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
 
-block copyright
-    include partial/copyright
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="【AHOI2008】-聚会-倍增" data-title="【AHOI2008】 聚会 倍增" data-url="http://yoursite.com/2018/09/02/【AHOI2008】-聚会-倍增/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="【AHOI2008】 聚会 倍增">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2018 hi_archer
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

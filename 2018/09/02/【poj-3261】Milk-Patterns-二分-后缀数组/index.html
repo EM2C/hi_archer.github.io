@@ -1,48 +1,319 @@
-extends partial/layout
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>【poj 3261】Milk Patterns 二分+后缀数组 | hi_archer&#39;blog</title>
 
-block site_title
-    != page.title + " · " + config.title
+  <!-- keywords -->
+  
 
-block description
-    - var desc = page.desc || page.title + ' - ' + config.author;
-    meta(name="description", content=desc)
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题意：给一个N项的序列（1&amp;lt;=N &amp;lt;= 20,000，每一项是不超过1,000,000的自然数），求至少出现K次的子串的最大长度，出现位置允许重叠。chrt的hash有兴趣的可以看一下，虽然跑得比后缀数组慢但是代码短易于实现。这个题目就是二分可能的长度，然后每次验证就可以了。嗯，于是验证的时候就用后缀数组暴力验证吧，头痛欲裂。不想分析时间复杂度这些东西了。直接贴代码吧，等有机会再详细解">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【poj 3261】Milk Patterns 二分+后缀数组">
+<meta property="og:url" content="http://yoursite.com/2018/09/02/【poj-3261】Milk-Patterns-二分-后缀数组/index.html">
+<meta property="og:site_name" content="hi_archer&#39;blog">
+<meta property="og:description" content="题意：给一个N项的序列（1&amp;lt;=N &amp;lt;= 20,000，每一项是不超过1,000,000的自然数），求至少出现K次的子串的最大长度，出现位置允许重叠。chrt的hash有兴趣的可以看一下，虽然跑得比后缀数组慢但是代码短易于实现。这个题目就是二分可能的长度，然后每次验证就可以了。嗯，于是验证的时候就用后缀数组暴力验证吧，头痛欲裂。不想分析时间复杂度这些东西了。直接贴代码吧，等有机会再详细解">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-02T15:25:37.553Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【poj 3261】Milk Patterns 二分+后缀数组">
+<meta name="twitter:description" content="题意：给一个N项的序列（1&amp;lt;=N &amp;lt;= 20,000，每一项是不超过1,000,000的自然数），求至少出现K次的子串的最大长度，出现位置允许重叠。chrt的hash有兴趣的可以看一下，虽然跑得比后缀数组慢但是代码短易于实现。这个题目就是二分可能的长度，然后每次验证就可以了。嗯，于是验证的时候就用后缀数组暴力验证吧，头痛欲裂。不想分析时间复杂度这些东西了。直接贴代码吧，等有机会再详细解">
+  
+    <link rel="alternative" href="/atom.xml" title="hi_archer&#39;blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
 
-block container
-    div#post-container
-        include mixins/post
-        +post(page)
-        include partial/comment
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-    //- Comment
-    if theme.duoshuo
-        script.
-            var duoshuoQuery = {short_name:"#{theme.duoshuo}"};
-            (function() {
-                var ds = document.createElement('script');
-                ds.type = 'text/javascript';ds.async = true;
-                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-                ds.charset = 'UTF-8';
-                (document.getElementsByTagName('head')[0] 
-                || document.getElementsByTagName('body')[0]).appendChild(ds);
-            })();
+  
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">hi_archer</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">hi_archer</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">hi_archer</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-【poj-3261】Milk-Patterns-二分-后缀数组" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/02/【poj-3261】Milk-Patterns-二分-后缀数组/" class="article-date">
+  	<time datetime="2018-09-02T15:21:45.000Z" itemprop="datePublished">2018-09-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【poj 3261】Milk Patterns 二分+后缀数组
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/后缀数组/">后缀数组</a>
+	</div>
 
 
-    if theme.disqus
-        script.
-            var disqus_shortname = '#{theme.disqus}';
-            var disqus_identifier = '#{page.path}';
-            var disqus_title = '#{page.title}';
-            var disqus_url = '#{config.url}/#{page.path}';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        script(id='dsq-count-scr' src='//#{theme.disqus}.disqus.com/count.js' async)
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>题意：给一个N项的序列（1&lt;=N &lt;= 20,000，每一项是不超过1,000,000的自然数），求至少出现K次的子串的最大长度，出现位置允许重叠。<br><a href="http://blog.csdn.net/ruoruo_cheng/article/details/52949147" target="_blank" rel="noopener">chrt的hash</a><br>有兴趣的可以看一下，虽然跑得比后缀数组慢但是代码短易于实现。<br>这个题目就是二分可能的长度，然后每次验证就可以了。嗯，于是验证的时候就用后缀数组暴力验证吧，头痛欲裂。不想分析时间复杂度这些东西了。直接贴代码吧，等有机会再详细解释吧。<br><strong>代码：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">const int MAXN = 100005;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int s[MAXN];</span><br><span class="line">int sa[MAXN],r[MAXN],t[MAXN],t2[MAXN],c[MAXN],h[MAXN],n,k;</span><br><span class="line"></span><br><span class="line">inline void build_sa(int m)</span><br><span class="line">&#123;</span><br><span class="line">	int *x = t,*y = t2;</span><br><span class="line">	</span><br><span class="line">	for(int i = 0;i &lt; m;i++) c[i] = 0;</span><br><span class="line">	for(int i = 0;i &lt; n;i++) c[x[i] = s[i]]++;</span><br><span class="line">	for(int i = 0;i &lt; m;i++) c[i] += c[i-1];</span><br><span class="line">	for(int i = n - 1;i &gt;= 0;i--) sa[--c[x[i]]] = i;</span><br><span class="line">	</span><br><span class="line">	for(int k = 1;k &lt;= n;k &lt;&lt;= 1)&#123;</span><br><span class="line">		int p = 0;</span><br><span class="line">		for(int i = n - k;i &lt; n;i++) y[p++] = i;</span><br><span class="line">		for(int i = 0;i &lt; n;i++) if(sa[i] &gt;= k) y[p++] = sa[i] - k;</span><br><span class="line">		</span><br><span class="line">		for(int i = 0;i &lt; m;i++) c[i] = 0;</span><br><span class="line">		for(int i = 0;i &lt; n;i++) c[x[y[i]]]++;</span><br><span class="line">		for(int i = 0;i &lt; m;i++) c[i] += c[i-1];</span><br><span class="line">		for(int i = n - 1;i &gt;= 0;i--) sa[--c[x[y[i]]]] = y[i];</span><br><span class="line">			</span><br><span class="line">		swap(x,y);</span><br><span class="line">		p = 1;x[sa[0]] = 0;</span><br><span class="line">		for(int i = 1;i &lt; n;i++)</span><br><span class="line">			x[sa[i]] = y[sa[i-1]] == y[sa[i]] &amp;&amp; y[sa[i-1]+k] == y[sa[i]+k] ? p - 1 : p++;</span><br><span class="line">		if(p &gt;= n) break;</span><br><span class="line">		m = p;	</span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline void build_Height()</span><br><span class="line">&#123;</span><br><span class="line">	int i,j,k = 0;</span><br><span class="line">	for(i = 0;i &lt; n;i++) r[sa[i]] = i;</span><br><span class="line">	for(i = 0;i &lt; n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if(k) k--;</span><br><span class="line">		j = sa[r[i] - 1];</span><br><span class="line">		while(s[i+k] == s[j + k]) ++k;</span><br><span class="line">		h[r[i]] = k;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline bool check(int M)&#123;</span><br><span class="line">	int cnt = 1;</span><br><span class="line">	for(int i = 1;i &lt; n;i++)&#123;</span><br><span class="line">		if(h[i] &gt;= M)&#123;</span><br><span class="line">			if(++cnt &gt;= k) return true;</span><br><span class="line">		&#125;	else &#123;</span><br><span class="line">			cnt = 1;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return cnt &gt;= k;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	scanf(&quot;%d %d&quot;,&amp;n,&amp;k);</span><br><span class="line">	</span><br><span class="line">	for(int i = 0;i &lt; n;i++)</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;s[i]),</span><br><span class="line">		 ++s[i];</span><br><span class="line">	</span><br><span class="line">	n++;</span><br><span class="line">	</span><br><span class="line">	build_sa(256);</span><br><span class="line">	</span><br><span class="line">	build_Height();</span><br><span class="line">	</span><br><span class="line">	int L = 1,R = n,ans;</span><br><span class="line">	</span><br><span class="line">	while(L &lt;= R)&#123;</span><br><span class="line">		int M = (L+R) &gt;&gt; 1;</span><br><span class="line">		if(check(M)) L = M + 1,ans = M;</span><br><span class="line">		else R = M - 1;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;ans;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
-block pagination
-    include mixins/paginator
-    +post()
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/02/【SDOI-2009】学校食堂Dining-状压动规/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          【SDOI 2009】学校食堂Dining 状压动规
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/02/【poj-1185】【codevs-1647】炮兵阵地-状压动规/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【poj 1185】【codevs 1647】炮兵阵地 状压动规</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
 
-block copyright
-    include partial/copyright
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="【poj-3261】Milk-Patterns-二分-后缀数组" data-title="【poj 3261】Milk Patterns 二分+后缀数组" data-url="http://yoursite.com/2018/09/02/【poj-3261】Milk-Patterns-二分-后缀数组/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="【poj 3261】Milk Patterns 二分+后缀数组">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2018 hi_archer
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

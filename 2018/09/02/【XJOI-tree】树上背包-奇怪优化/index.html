@@ -1,48 +1,331 @@
-extends partial/layout
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>【XJOI tree】树上背包+奇怪优化 | hi_archer&#39;blog</title>
 
-block site_title
-    != page.title + " · " + config.title
+  <!-- keywords -->
+  
 
-block description
-    - var desc = page.desc || page.title + ' - ' + config.author;
-    meta(name="description", content=desc)
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题解：考这场考试的前一天晚上逛大神博客，看见别人有写树上背包，嗯，一笑而过了。。。。结果第二天XJOI的提高组模拟赛就考了。于是不会，然后今天在上课的时候发呆的时候，自己脑补出来树上背包的做法。嗯，看了一下大神的博客，我发现大神的树上背包是用的记忆化搜索，我最开始的想法是基于拓扑排序从下往上dp，嗯，复杂了，改进了一下我的方法。 一般的树上背包：（60分解法）定义：dp[i][j]为到点i已经装入">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【XJOI tree】树上背包+奇怪优化">
+<meta property="og:url" content="http://yoursite.com/2018/09/02/【XJOI-tree】树上背包-奇怪优化/index.html">
+<meta property="og:site_name" content="hi_archer&#39;blog">
+<meta property="og:description" content="题解：考这场考试的前一天晚上逛大神博客，看见别人有写树上背包，嗯，一笑而过了。。。。结果第二天XJOI的提高组模拟赛就考了。于是不会，然后今天在上课的时候发呆的时候，自己脑补出来树上背包的做法。嗯，看了一下大神的博客，我发现大神的树上背包是用的记忆化搜索，我最开始的想法是基于拓扑排序从下往上dp，嗯，复杂了，改进了一下我的方法。 一般的树上背包：（60分解法）定义：dp[i][j]为到点i已经装入">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20161031173023117">
+<meta property="og:image" content="http://img.blog.csdn.net/20161031173042133">
+<meta property="og:updated_time" content="2018-09-02T15:27:52.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【XJOI tree】树上背包+奇怪优化">
+<meta name="twitter:description" content="题解：考这场考试的前一天晚上逛大神博客，看见别人有写树上背包，嗯，一笑而过了。。。。结果第二天XJOI的提高组模拟赛就考了。于是不会，然后今天在上课的时候发呆的时候，自己脑补出来树上背包的做法。嗯，看了一下大神的博客，我发现大神的树上背包是用的记忆化搜索，我最开始的想法是基于拓扑排序从下往上dp，嗯，复杂了，改进了一下我的方法。 一般的树上背包：（60分解法）定义：dp[i][j]为到点i已经装入">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161031173023117">
+  
+    <link rel="alternative" href="/atom.xml" title="hi_archer&#39;blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
 
-block container
-    div#post-container
-        include mixins/post
-        +post(page)
-        include partial/comment
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-    //- Comment
-    if theme.duoshuo
-        script.
-            var duoshuoQuery = {short_name:"#{theme.duoshuo}"};
-            (function() {
-                var ds = document.createElement('script');
-                ds.type = 'text/javascript';ds.async = true;
-                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-                ds.charset = 'UTF-8';
-                (document.getElementsByTagName('head')[0] 
-                || document.getElementsByTagName('body')[0]).appendChild(ds);
-            })();
+  
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">hi_archer</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">hi_archer</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">hi_archer</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-【XJOI-tree】树上背包-奇怪优化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/02/【XJOI-tree】树上背包-奇怪优化/" class="article-date">
+  	<time datetime="2018-09-02T15:27:06.000Z" itemprop="datePublished">2018-09-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【XJOI tree】树上背包+奇怪优化
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/滑动窗口/">滑动窗口</a>
+	</div>
 
 
-    if theme.disqus
-        script.
-            var disqus_shortname = '#{theme.disqus}';
-            var disqus_identifier = '#{page.path}';
-            var disqus_title = '#{page.title}';
-            var disqus_url = '#{config.url}/#{page.path}';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        script(id='dsq-count-scr' src='//#{theme.disqus}.disqus.com/count.js' async)
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://img.blog.csdn.net/20161031173023117" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20161031173042133" alt="这里写图片描述"><br><strong>题解：</strong><br>考这场考试的前一天晚上逛大神博客，看见别人有写树上背包，嗯，一笑而过了。。。。结果第二天XJOI的提高组模拟赛就考了。于是不会，然后今天在上课的时候发呆的时候，自己脑补出来树上背包的做法。嗯，看了一下大神的博客，我发现大神的树上背包是用的记忆化搜索，我最开始的想法是基于拓扑排序从下往上dp，嗯，复杂了，改进了一下我的方法。</p>
+<p><strong>一般的树上背包：（60分解法）</strong><br>定义：dp[i][j]为到点i已经装入j个点所能获得的最大价值。</p>
+<p>然后我们的状态转移方程为： dp[i][j] = max(dp[i][j],dp[i][j-k] + dp[son[i]][k]);<br>要遍历N个点，显然j要从1-lim循环，k也要从1-lim循环。所以时间复杂度为O（N*lim^2）<br>可以过N &lt;= 100的数据，对于本题60分是够了的。PS：对于善良的出题人，也都是可以AC的。</p>
+<p><strong>优化一下的树上背包：（100分解法）</strong><br>同样定义：dp[i][j]为到点i已经装入j个点所能获得的最大价值,再多定义一个sz[i]用来表示i的以搜索子树大小；</p>
+<p>然后我们的状态转移方程为： dp[i][j] = max(dp[i][j],dp[i][j-k] + dp[son[i]][k]);</p>
+<p>但是我们稍微思考一下我们每一次状态转移的时候都不用遍历所有的状态，因为我们有效的状态没有那么多个，画个图发现我有效的状态，只有我们前面搜索的所有树上所有点，也就是sz[i]，然后我可以更新我这个节点的子树的状态为sz[son[i]]，<strong>这样的话更新我这个状态的时间复杂度就由原来的lim^2变成了蜜汁时间复杂度，感觉这儿应该涉及到均摊和期望？反正我不太会算，请各位大神解答一下感激不尽</strong></p>
+<p>对了别人官方题解给出的代码和我的解答是一样的，但是按照我的理解似乎官方解答和我的解答的思路就不一样。</p>
+<p><strong>官方题解：</strong><br>有兴趣的可以去别人哪儿看，我就不发了。<br><a href="http://www.hzxjhs.com:83/contest/633/problem/3/solution" target="_blank" rel="noopener">XJOI题解</a></p>
+<p><strong>代码：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line"></span><br><span class="line">const int MAXN = 3005,INF = 1e9;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int n,k,e = 1,ans;</span><br><span class="line">int head[MAXN],d[MAXN],dp[MAXN][MAXN],sz[MAXN];</span><br><span class="line">bool vis[MAXN];</span><br><span class="line"></span><br><span class="line">struct node&#123;</span><br><span class="line">	int v,next;</span><br><span class="line">&#125;edge[10*MAXN];</span><br><span class="line"></span><br><span class="line">inline void addedge(int u,int v)</span><br><span class="line">&#123;</span><br><span class="line">	edge[e] = (node)&#123;v,head[u]&#125;;head[u] = e++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inline void init()</span><br><span class="line">&#123;</span><br><span class="line">	scanf(&quot;%d %d&quot;,&amp;n,&amp;k);</span><br><span class="line">	</span><br><span class="line">	for(int i = 1;i &lt;= n;i++) scanf(&quot;%d&quot;,&amp;d[i]);</span><br><span class="line">	</span><br><span class="line">	int u,v;</span><br><span class="line">	</span><br><span class="line">	for(int i = 1;i &lt; n;i++)&#123;</span><br><span class="line">		scanf(&quot;%d %d&quot;,&amp;u,&amp;v);</span><br><span class="line">		addedge(u,v);addedge(v,u);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int dfs(int u,int fa)</span><br><span class="line">&#123;</span><br><span class="line">	sz[u] = 0;dp[u][0] = 0;</span><br><span class="line">	</span><br><span class="line">	for(int i = head[u];i;i = edge[i].next)</span><br><span class="line">	&#123;</span><br><span class="line">		int v = edge[i].v;</span><br><span class="line">		if(v != fa)&#123;</span><br><span class="line">			dfs(v,u);</span><br><span class="line">			</span><br><span class="line">			for(int j = sz[u];j &gt;= 0;j--)</span><br><span class="line">				for(int k = 1;k &lt;= sz[v];k++)</span><br><span class="line">					dp[u][j+k] = max(dp[u][j+k],dp[u][j] + dp[v][k]);</span><br><span class="line">					</span><br><span class="line">			sz[u] += sz[v];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	sz[u]++;</span><br><span class="line">	</span><br><span class="line">	for(int i = sz[u];i &gt;= 1;i--)</span><br><span class="line">		dp[u][i] = dp[u][i-1] + d[u];</span><br><span class="line">	</span><br><span class="line">	dp[u][0] = -INF;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	init();</span><br><span class="line">	</span><br><span class="line">	for(int i = 1;i &lt;= n;i++)</span><br><span class="line">		for(int j = 0;j &lt;= k;j++)</span><br><span class="line">			dp[i][j] = -INF;</span><br><span class="line">	</span><br><span class="line">	dfs(1,0);</span><br><span class="line">	</span><br><span class="line">	ans = -INF;</span><br><span class="line">	</span><br><span class="line">	for(int i = 1;i &lt;= k;i++)</span><br><span class="line">		ans = max(dp[1][i],ans);</span><br><span class="line">	</span><br><span class="line">	printf(&quot;%d&quot;,ans);</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-block pagination
-    include mixins/paginator
-    +post()
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/02/【图论】BFS-欧拉回路/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          【图论】BFS+欧拉回路
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/02/【uva-11572】-唯一的雪花-滑动窗口/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【uva 11572】 唯一的雪花 滑动窗口</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
 
-block copyright
-    include partial/copyright
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="【XJOI-tree】树上背包-奇怪优化" data-title="【XJOI tree】树上背包+奇怪优化" data-url="http://yoursite.com/2018/09/02/【XJOI-tree】树上背包-奇怪优化/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="【XJOI tree】树上背包+奇怪优化">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2018 hi_archer
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

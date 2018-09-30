@@ -1,48 +1,341 @@
-extends partial/layout
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>【图论】BFS+欧拉回路 | hi_archer&#39;blog</title>
 
-block site_title
-    != page.title + " · " + config.title
+  <!-- keywords -->
+  
 
-block description
-    - var desc = page.desc || page.title + ' - ' + config.author;
-    meta(name="description", content=desc)
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="标题有点大，但是事实上我也确实是想弄一个比较大整理性文章。这些文章的绝大多数我不准备写代码了，但强迫自己不看题解自己去想那些题目怎么写，然后把相类似的题目放在一起用来帮助我分析，并且将知识点串起来复习。题目大多数来自于算法入门经典系列，CODEVS,BZOJ,XJOI,HUSTOJ,等。Vjudge  大火蔓延的迷宫（Fire！，UVa 11624） 算法入门经典训练指南P307.  Fire！D">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【图论】BFS+欧拉回路">
+<meta property="og:url" content="http://yoursite.com/2018/09/02/【图论】BFS-欧拉回路/index.html">
+<meta property="og:site_name" content="hi_archer&#39;blog">
+<meta property="og:description" content="标题有点大，但是事实上我也确实是想弄一个比较大整理性文章。这些文章的绝大多数我不准备写代码了，但强迫自己不看题解自己去想那些题目怎么写，然后把相类似的题目放在一起用来帮助我分析，并且将知识点串起来复习。题目大多数来自于算法入门经典系列，CODEVS,BZOJ,XJOI,HUSTOJ,等。Vjudge  大火蔓延的迷宫（Fire！，UVa 11624） 算法入门经典训练指南P307.  Fire！D">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-02T15:29:01.848Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【图论】BFS+欧拉回路">
+<meta name="twitter:description" content="标题有点大，但是事实上我也确实是想弄一个比较大整理性文章。这些文章的绝大多数我不准备写代码了，但强迫自己不看题解自己去想那些题目怎么写，然后把相类似的题目放在一起用来帮助我分析，并且将知识点串起来复习。题目大多数来自于算法入门经典系列，CODEVS,BZOJ,XJOI,HUSTOJ,等。Vjudge  大火蔓延的迷宫（Fire！，UVa 11624） 算法入门经典训练指南P307.  Fire！D">
+  
+    <link rel="alternative" href="/atom.xml" title="hi_archer&#39;blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
 
-block container
-    div#post-container
-        include mixins/post
-        +post(page)
-        include partial/comment
+  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-    //- Comment
-    if theme.duoshuo
-        script.
-            var duoshuoQuery = {short_name:"#{theme.duoshuo}"};
-            (function() {
-                var ds = document.createElement('script');
-                ds.type = 'text/javascript';ds.async = true;
-                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-                ds.charset = 'UTF-8';
-                (document.getElementsByTagName('head')[0] 
-                || document.getElementsByTagName('body')[0]).appendChild(ds);
-            })();
+  
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">hi_archer</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">hi_archer</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">hi_archer</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-【图论】BFS-欧拉回路" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/02/【图论】BFS-欧拉回路/" class="article-date">
+  	<time datetime="2018-09-02T15:28:20.000Z" itemprop="datePublished">2018-09-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【图论】BFS+欧拉回路
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/欧拉回路/">欧拉回路</a>
+	</div>
 
 
-    if theme.disqus
-        script.
-            var disqus_shortname = '#{theme.disqus}';
-            var disqus_identifier = '#{page.path}';
-            var disqus_title = '#{page.title}';
-            var disqus_url = '#{config.url}/#{page.path}';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        script(id='dsq-count-scr' src='//#{theme.disqus}.disqus.com/count.js' async)
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标题有点大，但是事实上我也确实是想弄一个比较大整理性文章。这些文章的绝大多数我不准备写代码了，但强迫自己不看题解自己去想那些题目怎么写，然后把相类似的题目放在一起用来帮助我分析，并且将知识点串起来复习。题目大多数来自于算法入门经典系列，CODEVS,BZOJ,XJOI,HUSTOJ,等。<br><a href="http://vjudge.net/problem#OJId=All&amp;probNum=&amp;title=&amp;source=" target="_blank" rel="noopener">Vjudge</a></p>
+<ul>
+<li><strong>大火蔓延的迷宫（Fire！，UVa 11624） 算法入门经典训练指南P307.</strong></li>
+</ul>
+<p><a href="http://vjudge.net/problem/28833" target="_blank" rel="noopener">Fire！</a><br><strong>Description：</strong><br>一个平面迷宫中有一个人，迷宫中有些点起火了，火和人每个单位时间只能向相邻的格子移动，其中有一些空间被墙壁占据，问这个人在不背或烧到的情况下，离开迷宫的最快时间。</p>
+<p><strong>题解：</strong><br>这个题目因为这个火可以动，这样的话我们所能够走的地方就受到了限制，我们每次走到一个点，不但要考虑到那个点最短时间而且同时还要考虑那个点之前是否被火烧过。</p>
+<p>这样似乎是比较麻烦，那么我们考虑首先预处理出从每个点到最近的火的位置，恩，这样的话我们最后找走出迷宫的最短路就除了考虑是否有更短的点以外还要考虑是否有火在我到之前到。</p>
+<p><strong>Hint：我们在初始的时候将所有的点一次性加入队列</strong></p>
+<ul>
+<li><strong>escape（这是NOIP十连测的题目没有连接）</strong></li>
+</ul>
+<p><strong>Description</strong><br>给出数字N（1&lt;=N&lt;=10000），X（1&lt;=x&lt;=1000），Y（1&lt;=Y&lt;=1000）,代表有N个敌人分布一个X行Y列的矩阵上矩形的<br>行号从0到X-1,列号从0到Y-1再给出四个数字x1,y1,x2,y2,代表你要从点(x1,y1)移到(x2,y2)。在移动的过程中你<br>当然希望离敌人的距离的最小值最大化，现在请求出这个值最大可以为多少,以及在这个前提下你最少要走多少步<br>才可以回到目标点。注意这里距离的定义为两点的曼哈顿距离，即某两个点的坐标分为(a,b),(c,d)那么它们的距<br>离为|a-c|+|b-d|<br><strong>Input</strong><br>第一行给出数字N，X，Y<br>第二行给出x1,y1,x2,y2<br>下面将有N行，给出N个敌人所在的坐标<br><strong>Output</strong><br>在一行内输出你离敌人的距离及在这个距离的限制下，你回到目标点最少要移动多少步。<br><strong>Sample Input</strong><br>2 5 6<br>0 0 4 0<br>2 1<br>2 3<br><strong>Sample Output</strong><br>2 14</p>
+<p>这个题目算作是上面那个题目的升级版本了。现在我们要求我们到敌人的距离的最小值最大，这种题目一般就是二分啦，仍然预处理出每个点到最近的敌人的距离，然后我们二分我们到敌人的距离，并验证是否能行，借此不断调整左右直到算出答案。</p>
+<p><strong>Hint：这种二分的问题，我们要考虑我们的初始点就不符合要求的情况</strong></p>
+<ul>
+<li><strong>独轮车 （The Monocycle，Uva 10047）</strong></li>
+</ul>
+<p><strong>Description：</strong><br>给你一个独轮车，轮子上有五个扇形，每过一个格子就转过一个扇形，刚开始的时候方向是向北的，绿色上行向下，每一次可以有三种操作，到下一个格子，左转90度，右转90度，每一次操作都花费时间1，问从起点到终点的最小步数，要求到终点的时候必须还是绿色扇形向下，方向无所谓。</p>
+<p><strong>题解：</strong><br>这题目首先我们到每个点之后轮子的颜色会变化，并且我方向不同的话时间也不同。那我们暴力一点把这多出来的状态加进数组里面。<br>定义：dis[x][y][c][d] 为到（x，y）颜色为c的轮子在下面朝向方向 d的最短距离是多少。</p>
+<p><strong>Hint：图论有时候和DP一样如果状态搞不定了尝试一下能不能通过加维来解决?</strong></p>
+<ul>
+<li><strong>项链（The Necklace，UVa 10054）</strong><br><strong>Description：</strong><br>有一串珠子，每个珠子的前半部分和后半部分都有一种颜色。两个珠子颜色相同的部分，可以连到一起。给定一些珠子看是否能用所有这些珠子串成一个项链。<br><strong>题解：</strong><br>画个图模拟一下，似乎就是讲这个项链串成一个项链（这不是废话吗？还要你说？）额，就是这样在每一个珠子的左边到右边连接一条无向边，然后求欧拉回路。<br>因为这个题目比较坑爹，而且这是一个专题，我就单独的写个文章作为题解，这边就作为一个引子<br><a href="http://blog.csdn.net/qantun_mechanics/article/details/53048150" target="_blank" rel="noopener">欧拉路径</a></li>
+</ul>
 
-block pagination
-    include mixins/paginator
-    +post()
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/02/欧拉回路/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          欧拉回路
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/02/【XJOI-tree】树上背包-奇怪优化/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【XJOI tree】树上背包+奇怪优化</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
 
-block copyright
-    include partial/copyright
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="【图论】BFS-欧拉回路" data-title="【图论】BFS+欧拉回路" data-url="http://yoursite.com/2018/09/02/【图论】BFS-欧拉回路/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="【图论】BFS+欧拉回路">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2018 hi_archer
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
